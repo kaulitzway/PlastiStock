@@ -23,17 +23,25 @@ namespace PlastiStock.Contest
             // Relación uno a muchos entre TipoDocumento y Usuario
             modelBuilder.Entity<Usuarios>(entity =>
             {
-                entity.HasKey (e => e.Id);
-                entity.Property(e => e.Nombre).IsRequired().HasMaxLength(100);
-                entity.Property(e => e.Apellido).IsRequired().HasMaxLength(100);
-                entity.Property(e => e.Correo).IsRequired().HasMaxLength(150);
-                entity.Property(e => e.Contraseña).IsRequired().HasMaxLength(255);
+                entity.HasKey(e => e.Id).HasName("Id");
+                entity.Property(e => e.Nombre).IsRequired().HasMaxLength(100).HasColumnName("Nombre");
+                entity.Property(e => e.Apellido).IsRequired().HasMaxLength(100).HasColumnName("Apellido");
+                entity.Property(e => e.TipoDocumentoId).IsRequired().HasColumnName("TipoDocumentoId");
+                entity.Property(e => e.Correo).IsRequired().HasMaxLength(150).HasColumnName("Correo");
+                entity.Property(e => e.Contraseña).IsRequired().HasMaxLength(255).HasColumnName("Contraseña");
                 entity.HasOne(e => e.TipoDocumento)
                       .WithMany(t => t.Usuarios)
                       .HasForeignKey(e => e.TipoDocumentoId);
 
 
 
+            } );
+
+            modelBuilder.Entity<TipoDocumento>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("Id");
+                entity.Property(e => e.Nombre).IsRequired().HasMaxLength(100).HasColumnName("Nombre");
+                entity.Property(e => e.Abreviatura).IsRequired().HasMaxLength(10).HasColumnName("Abreviatura");
             } );
 
         }
