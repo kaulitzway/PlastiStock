@@ -32,6 +32,7 @@ namespace PlastiStock.Contest
                 entity.HasOne(e => e.TipoDocumento)
                       .WithMany(t => t.Usuarios)
                       .HasForeignKey(e => e.TipoDocumentoId);
+                entity.ToTable("Usuarios");
 
 
 
@@ -42,7 +43,10 @@ namespace PlastiStock.Contest
                 entity.HasKey(e => e.Id).HasName("Id");
                 entity.Property(e => e.Nombre).IsRequired().HasMaxLength(100).HasColumnName("Nombre");
                 entity.Property(e => e.Abreviatura).IsRequired().HasMaxLength(10).HasColumnName("Abreviatura");
+                entity.ToTable("TipoDocumento");
             } );
+
+            base.OnModelCreating(modelBuilder);
 
         }
 
