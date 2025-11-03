@@ -1,0 +1,9 @@
+# Archivos y carpetas que Git debe ignorar
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.cache
+*.dbmdl
+*.log
