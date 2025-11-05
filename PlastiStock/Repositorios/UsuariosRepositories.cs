@@ -1,65 +1,56 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PlastiStock.Contest;
+using PlastiStock.Data;
 using PlastiStock.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace PlastiStock.Repositorios
+namespace PlastiStock.Repositories
 {
-    public class UsuariosRepositories : IUsuariosRepositories
+    public class UsuarioRepository : IUsuarioRepository
     {
-        // Implementación de los métodos definidos en la interfaz IUsuariosRepositories
-        private readonly PlasticStockContext _context;
+        private readonly AppDbContext _context;
 
-        public UsuariosRepositories(PlasticStockContext context)
+        public UsuarioRepository(AppDbContext context)
         {
             _context = context;
         }
 
-        public async Task<Usuarios> ObtenerUsuario(int id)
+        public async Task<List<Usuario>> GetAllAsync()
         {
-               return await _context.Usuarios.FirstOrDefaultAsync(u => u.Id == id);
+            return await _context.Usuarios
+                .Include(u => u.TipoDocumento)
+                .Include(u => u.Rol)
+                .ToListAsync();
         }
 
-        public async Task<List<Usuarios>> ObtenerUsuarios()
+        public async Task<Usuario> GetByIdAsync(int id)
         {
-            return await _context.Usuarios.ToListAsync();
+            return await _context.Usuarios
+                .Include(u => u.TipoDocumento)
+                .Include(u => u.Rol)
+                .FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public async Task<bool> EliminarUsuario(int id)
+        public async Task<bool> AddAsync(Usuario usuario)
         {
             try
             {
-                var UsuarioExistente = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id == id);    
-                if (UsuarioExistente == null)
-                {
-                    return false; // Usuario no encontrado
-                    throw new Exception("Usuario para eliminar no encontrado");
-                }
-
-                _context.Usuarios.Remove(UsuarioExistente);
+                await _context.Usuarios.AddAsync(usuario);
                 await _context.SaveChangesAsync();
                 return true;
-
-
             }
-
-            catch (Exception ex)
+            catch
             {
                 return false;
-                throw new Exception(ex.Message.ToString());
             }
         }
 
-        public async Task<bool> ActualizarUsuario(Usuarios usuario, int id)
+        public async Task<bool> UpdateAsync(Usuario usuario)
         {
             try
             {
-                var usuarioExistente = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id == id);
-                if (usuarioExistente == null)
-                {
-                    return false; // Usuario no encontrado
-                    throw new Exception("Usuario para actualizar no encontrado");
-                    
-                }
+                var usuarioExistente = await _context.Usuarios.FindAsync(usuario.Id);
+                if (usuarioExistente == null) return false;
 
                 usuarioExistente.Nombre = usuario.Nombre;
                 usuarioExistente.Apellido = usuario.Apellido;
@@ -67,34 +58,33 @@ namespace PlastiStock.Repositorios
                 usuarioExistente.NumeroDocumento = usuario.NumeroDocumento;
                 usuarioExistente.Correo = usuario.Correo;
                 usuarioExistente.Contraseña = usuario.Contraseña;
+                usuarioExistente.RolId = usuario.RolId;
 
-
-                _context.Usuarios.Update(usuario);
                 await _context.SaveChangesAsync();
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
-
                 return false;
-                throw new Exception(ex.Message.ToString());  
-
             }
         }
 
-        public async Task<bool> CrearUsuario(Usuarios usuario)
+        public async Task<bool> DeleteAsync(int id)
         {
             try
             {
-                _context.Usuarios.Add(usuario);
+                var usuario = await _context.Usuarios.FindAsync(id);
+                if (usuario == null) return false;
+
+                _context.Usuarios.Remove(usuario);
                 await _context.SaveChangesAsync();
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
-                throw new Exception(ex.Message.ToString());
             }
         }
     }
 }
+

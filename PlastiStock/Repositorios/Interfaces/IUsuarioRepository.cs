@@ -1,17 +1,15 @@
 ﻿using PlastiStock.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace PlastiStock.Repositorios
+namespace PlastiStock.Repositories
 {
-    public interface IUsuariosRepositories
+    public interface IUsuarioRepository
     {
-        Task<List<Usuarios>> ObtenerUsuarios();
-
-        Task<Usuarios> ObtenerUsuario(int id);
-
-        Task<bool> CrearUsuario(Usuarios usuario);
-
-        Task<bool> ActualizarUsuario(Usuarios usuario, int id);
-
-        Task<bool> EliminarUsuario(int id);
+        Task<List<Usuario>> GetAllAsync();
+        Task<Usuario> GetByIdAsync(int id);
+        Task<bool> AddAsync(Usuario usuario);
+        Task<bool> UpdateAsync(Usuario usuario);
+        Task<bool> DeleteAsync(int id);
     }
 }
