@@ -15,7 +15,7 @@ namespace PlastiStock.Controllers
             _usuarioRepository = usuarioRepository;
         }
 
-        // ✅ GET: api/usuarios
+        //  GET: api/usuarios (obtener información de todos los usuarios)
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -29,7 +29,7 @@ namespace PlastiStock.Controllers
             return Ok(usuarios);
         }
 
-        // ✅ GET: api/usuarios/{id}
+        //  GET: api/usuarios/{id} (|obtener información de un usuario específico por su ID)
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -43,7 +43,7 @@ namespace PlastiStock.Controllers
             return Ok(usuario);
         }
 
-        // ✅ POST: api/usuarios
+        //  POST: api/usuarios (crear un nuevo usuario)
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -60,7 +60,7 @@ namespace PlastiStock.Controllers
             return CreatedAtAction(nameof(GetById), new { id = usuario.Id }, usuario);
         }
 
-        // ✅ PUT: api/usuarios/{id}
+        // PUT: api/usuarios/{id} (actualizar la información de un usuario existente)
         [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -77,10 +77,10 @@ namespace PlastiStock.Controllers
             return Ok("Usuario actualizado correctamente.");
         }
 
-        // ✅ DELETE: api/usuarios/{id}
+        //  DELETE: api/usuarios/{id} (eliminar un usuario por su ID)
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)] 
         public async Task<IActionResult> Delete(int id)
         {
             var eliminado = await _usuarioRepository.DeleteAsync(id);

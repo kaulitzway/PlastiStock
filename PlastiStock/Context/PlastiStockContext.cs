@@ -11,7 +11,7 @@ namespace PlastiStock.Contest
         }
 
         // Estas son las tablas (entidades)
-        public DbSet<Usuarios> Usuarios { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<TipoDocumento> TiposDeDocumento { get; set; }
 
         // Configuraciones adicionales
@@ -21,7 +21,7 @@ namespace PlastiStock.Contest
             base.OnModelCreating(modelBuilder);
 
             // Relación uno a muchos entre TipoDocumento y Usuario
-            modelBuilder.Entity<Usuarios>(entity =>
+            modelBuilder.Entity<Usuario>(entity =>
             {
                 entity.HasKey(e => e.Id).HasName("Id");
                 entity.Property(e => e.Nombre).IsRequired().HasMaxLength(100).HasColumnName("Nombre");

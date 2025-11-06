@@ -28,7 +28,7 @@ namespace PlastiStock.Models
 
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
 
-        // 🔹 Relación con TipoDocumento
+        //  Relación con TipoDocumento
         [ForeignKey("TipoDocumento")]
         public int TipoDocumentoId { get; set; }
         public TipoDocumento TipoDocumento { get; set; }

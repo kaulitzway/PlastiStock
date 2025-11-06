@@ -2,13 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PlastiStock.Data; // Ajusta si tu DbContext está en otra carpeta
+using PlastiStock.Data; // Ajusta  tu DbContext está en otra carpeta
 using PlastiStock.Interfaces;
 using PlastiStock.Repositories;
 
 namespace PlastiStock
 {
-    public static class ServiceExtensions
+    public static class ConfigServiceExtensions
     {
         public static IServiceCollection AddExternal(this IServiceCollection services, IConfiguration configuration)
         {
