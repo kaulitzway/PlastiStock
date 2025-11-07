@@ -11,5 +11,6 @@ namespace PlastiStock.Repositories
         Task<bool> AddAsync(Usuario usuario);
         Task<bool> UpdateAsync(Usuario usuario);
         Task<bool> DeleteAsync(int id);
+        Task DeleteAsync(Usuario usuario);
     }
 }

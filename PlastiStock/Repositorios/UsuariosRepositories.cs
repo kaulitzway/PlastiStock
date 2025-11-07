@@ -85,6 +85,11 @@ namespace PlastiStock.Repositories
                 return false;
             }
         }
+
+        public Task DeleteAsync(Usuario usuario)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

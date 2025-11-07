@@ -18,19 +18,19 @@ namespace PlastiStock.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // 🔹 Nombres de tablas
+            //  Nombres de tablas
             modelBuilder.Entity<Usuario>().ToTable("Usuarios");
             modelBuilder.Entity<TipoDocumento>().ToTable("TiposDocumento");
             modelBuilder.Entity<Rol>().ToTable("Roles");
 
-            // 🔹 Relación TipoDocumento → Usuario (1:N)
+            // Relación TipoDocumento → Usuario (1:N)
             modelBuilder.Entity<Usuario>()
                 .HasOne(u => u.TipoDocumento)
                 .WithMany(t => t.Usuarios)
                 .HasForeignKey(u => u.TipoDocumentoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // 🔹 Relación Rol → Usuario (1:N)
+            // Relación Rol → Usuario (1:N)
             modelBuilder.Entity<Usuario>()
                 .HasOne(u => u.Rol)
                 .WithMany(r => r.Usuarios)
