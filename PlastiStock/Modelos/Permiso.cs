@@ -1,23 +1,24 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace PlastiStock.Models
 {
-    public class Rol
+    public class Permiso
     {
         [Key]
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string Nombre { get; set; }
+        [MaxLength(100)]
+        public string Nombre { get; set; }   // Ejemplo: ELIMINAR_PRODUCTO
 
         [MaxLength(200)]
         public string Descripcion { get; set; }
 
-        public ICollection<Usuario> Usuarios { get; set; }
-
+        // 🔹 Relación muchos a muchos
         public ICollection<RolPermiso> RolesPermiso { get; set; }
     }
 }
+
 

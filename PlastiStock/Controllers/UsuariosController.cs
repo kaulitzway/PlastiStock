@@ -22,7 +22,8 @@ namespace PlastiStock.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost("iniciar-sesion")]
+        [HttpPost]
+        [Route("IniciarSesion")]
         [SwaggerOperation(Summary = "Iniciar sesión", Description = "Verifica las credenciales del usuario y genera un token JWT.")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -48,14 +49,14 @@ namespace PlastiStock.Controllers
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var singIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
                 expires: DateTime.Now.AddHours(2),
-                signingCredentials: creds
+                signingCredentials: singIn
             );
 
             return Ok(new
