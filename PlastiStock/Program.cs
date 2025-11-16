@@ -21,6 +21,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
 builder.Services.AddScoped<ISolicitudRepository, SolicitudRepository>();
+builder.Services.AddScoped<IMateriaPrimaRepository, MateriaPrimaRepository>();
+builder.Services.AddScoped<IProductoEnProcesoRepository, ProductoEnProcesoRepository>();
+
 
 // ---------------------------------------
 // CONTROLLERS

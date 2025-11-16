@@ -33,7 +33,7 @@ namespace PlastiStock.Models
         public int TipoDocumentoId { get; set; }
         public TipoDocumento TipoDocumento { get; set; }
 
-        // 🔹 Relación con Rol
+        // Relación con Rol
         [ForeignKey("Rol")]
         public int RolId { get; set; }
         public Rol Rol { get; set; }

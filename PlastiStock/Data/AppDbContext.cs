@@ -18,6 +18,12 @@ namespace PlastiStock.Data
         public DbSet<Permiso> Permisos { get; set; }
         public DbSet<RolPermiso> RolesPermisos { get; set; }
         public DbSet<Solicitud> Solicitudes { get; set; }
+        public DbSet<MateriaPrima> MateriasPrimas { get; set; }
+        public DbSet<ProductoEnProceso> ProductosEnProceso { get; set; }
+        public DbSet<ProductoTerminado> ProductoTerminado { get; set; }
+
+
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,6 +37,9 @@ namespace PlastiStock.Data
             modelBuilder.Entity<Producto>().ToTable("Productos");
             modelBuilder.Entity<Permiso>().ToTable("Permisos");
             modelBuilder.Entity<RolPermiso>().ToTable("RolesPermisos");
+            modelBuilder.Entity<MateriaPrima>().ToTable("MateriasPrimas");
+
+
 
 
             // Relación Usuario → TipoDocumento
@@ -80,6 +89,17 @@ namespace PlastiStock.Data
                 .WithMany()
                 .HasForeignKey(s => s.RolSolicitadoId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ProductoEnProceso>().ToTable("ProductosEnProceso");
+
+            modelBuilder.Entity<ProductoEnProceso>()
+                .HasOne(p => p.MateriaPrima)
+                .WithMany(m => m.ProductosEnProceso)
+                .HasForeignKey(p => p.MateriaPrimaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
 
 
 
