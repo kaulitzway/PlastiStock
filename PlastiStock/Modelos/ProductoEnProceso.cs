@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PlastiStock.Models
 {
@@ -10,7 +10,7 @@ namespace PlastiStock.Models
 
         [Required]
         [MaxLength(150)]
-        public string Nombre { get; set; }
+        public required string Nombre { get; set; }
 
         [Required]
         public int Cantidad { get; set; }
@@ -20,13 +20,13 @@ namespace PlastiStock.Models
 
         [Required]
         [MaxLength(100)]
-        public string EstadoProceso { get; set; }  // Ej: Mezclado / Secado / Moldeado
+        public required string EstadoProceso { get; set; }
 
-        //  Relación con MateriaPrima
         [Required]
         public int MateriaPrimaId { get; set; }
 
-        public MateriaPrima MateriaPrima { get; set; }
+        public MateriaPrima? MateriaPrima { get; set; }
     }
 }
+
 

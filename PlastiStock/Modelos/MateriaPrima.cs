@@ -10,17 +10,16 @@ namespace PlastiStock.Models
 
         [Required]
         [MaxLength(150)]
-        public string Nombre { get; set; }
+        public required string Nombre { get; set; }
 
         [Required]
         public int CantidadDisponible { get; set; }
 
         [Required]
         [MaxLength(50)]
-        public string UnidadMedida { get; set; }
+        public required string UnidadMedida { get; set; }
 
-        // Relación inversa: 1 MateriaPrima → muchos ProductosEnProceso
-        public ICollection<ProductoEnProceso> ProductosEnProceso { get; set; }
+        public ICollection<ProductoEnProceso>? ProductosEnProceso { get; set; }
     }
 }
 

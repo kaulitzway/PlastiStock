@@ -1,23 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using PlastiStock.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace PlastiStock.Models
+public class Rol
 {
-    public class Rol
-    {
-        [Key]
-        public int Id { get; set; }
+    [Key]
+    public int Id { get; set; }
 
-        [Required]
-        [MaxLength(50)]
-        public string Nombre { get; set; }
+    [Required]
+    public required string Nombre { get; set; }
 
-        [MaxLength(200)]
-        public string Descripcion { get; set; }
+    public string? Descripcion { get; set; }
 
-        public ICollection<Usuario> Usuarios { get; set; }
-
-        public ICollection<RolPermiso> RolesPermiso { get; set; }
-    }
+    public ICollection<Usuario> Usuarios { get; set; }
+    public ICollection<RolPermiso> RolesPermiso { get; set; }
 }
+
 

@@ -98,6 +98,9 @@ namespace PlastiStock.Data
                 .HasForeignKey(p => p.MateriaPrimaId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+           modelBuilder.Entity<Producto>()
+                .Property(p => p.PrecioUnitario)
+                .HasColumnType("decimal(18,2)");
 
 
 

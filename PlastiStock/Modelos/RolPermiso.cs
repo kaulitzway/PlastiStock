@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PlastiStock.Models
 {
@@ -8,13 +7,15 @@ namespace PlastiStock.Models
         [Key]
         public int Id { get; set; }
 
-        [ForeignKey("Rol")]
+        [Required]
         public int RolId { get; set; }
-        public Rol Rol { get; set; }
+        public Rol? Rol { get; set; }
 
-        [ForeignKey("Rol")]
+        [Required]
         public int PermisoId { get; set; }
-        public Permiso Permiso { get; set; }
+        public Permiso? Permiso { get; set; }
     }
 }
+
+
 

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace PlastiStock.Models
@@ -11,13 +10,12 @@ namespace PlastiStock.Models
 
         [Required]
         [MaxLength(100)]
-        public string Nombre { get; set; }   // Ejemplo: ELIMINAR_PRODUCTO
+        public required string Nombre { get; set; }
 
         [MaxLength(200)]
-        public string Descripcion { get; set; }
+        public string? Descripcion { get; set; }
 
-        // 🔹 Relación muchos a muchos
-        public ICollection<RolPermiso> RolesPermiso { get; set; }
+        public ICollection<RolPermiso>? RolesPermiso { get; set; }
     }
 }
 

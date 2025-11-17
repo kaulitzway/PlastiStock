@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using PlastiStock.Models;
 using PlastiStock.Repositories;
@@ -22,8 +23,8 @@ namespace PlastiStock.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost]
-        [Route("IniciarSesion")]
+        [HttpPost("IniciarSesion")]
+        [AllowAnonymous]
         [SwaggerOperation(Summary = "Iniciar sesión", Description = "Verifica las credenciales del usuario y genera un token JWT.")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -91,7 +92,7 @@ namespace PlastiStock.Controllers
             return Ok(usuario);
         }
 
-        [HttpPost]
+        [HttpPost("crear")]
         [SwaggerOperation(Summary = "Crear usuario", Description = "Crea un nuevo usuario en la base de datos.")]
         public async Task<IActionResult> Create([FromBody] Usuario usuario)
         {
@@ -140,5 +141,6 @@ namespace PlastiStock.Controllers
         public string Contraseña { get; set; }
     }
 }
+
 
 

@@ -1,16 +1,23 @@
 ﻿using PlastiStock.Models;
+using System.ComponentModel.DataAnnotations;
 
 public class ProductoTerminado
 {
+    [Key]
     public int ProductoTerminadoId { get; set; }
 
-    public string Nombre { get; set; }
-    public string Descripcion { get; set; }
+    [Required]
+    public required string Nombre { get; set; }
+
+    public string? Descripcion { get; set; }
+
+    [Required]
     public int Cantidad { get; set; }
 
-    // Relación con ProductoEnProceso (uno a muchos)
+    [Required]
     public int ProductoEnProcesoId { get; set; }
-    public ProductoEnProceso ProductoEnProceso { get; set; }
+
+    public ProductoEnProceso? ProductoEnProceso { get; set; }
 }
 
 
