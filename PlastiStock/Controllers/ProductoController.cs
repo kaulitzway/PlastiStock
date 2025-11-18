@@ -17,21 +17,17 @@ namespace PlastiStock.Controllers
             _context = context;
         }
 
-        // ============================
-        //           GET ALL
-        // ============================
+        // Obtiene todos los productos, solo para Administrador y Supervisor
         [HttpGet]
-        [Authorize(Roles = "AdminPrincipal,AdminSecundario")]
+        [Authorize(Roles = "Administrador,Supervisor")]
         public async Task<ActionResult<IEnumerable<Producto>>> GetAll()
         {
             return await _context.Productos.ToListAsync();
         }
 
-        // ============================
-        //        GET BY ID
-        // ============================
+        // Obtiene un producto por ID, solo para Administrador y Supervisor
         [HttpGet("{id}")]
-        [Authorize(Roles = "AdminPrincipal,AdminSecundario")]
+        [Authorize(Roles = "Administrador,Supervisor")]
         public async Task<ActionResult<Producto>> GetById(int id)
         {
             var producto = await _context.Productos.FindAsync(id);
@@ -42,11 +38,9 @@ namespace PlastiStock.Controllers
             return producto;
         }
 
-        // ============================
-        //           CREATE
-        // ============================
+        // Crea un producto, solo para Administrador y Supervisor
         [HttpPost]
-        [Authorize(Roles = "AdminPrincipal,AdminSecundario")]
+        [Authorize(Roles = "Administrador,Supervisor")]
         public async Task<ActionResult<Producto>> Create(Producto producto)
         {
             _context.Productos.Add(producto);
@@ -55,11 +49,9 @@ namespace PlastiStock.Controllers
             return CreatedAtAction(nameof(GetById), new { id = producto.Id }, producto);
         }
 
-        // ============================
-        //           UPDATE
-        // ============================
+        // Actualiza un producto, solo para Administrador y Supervisor
         [HttpPut("{id}")]
-        [Authorize(Roles = "AdminPrincipal,AdminSecundario")]
+        [Authorize(Roles = "Administrador,Supervisor")]
         public async Task<IActionResult> Update(int id, Producto producto)
         {
             if (id != producto.Id)
@@ -82,11 +74,9 @@ namespace PlastiStock.Controllers
             return Ok("Producto actualizado correctamente.");
         }
 
-        // ============================
-        //           DELETE
-        // ============================
+        // Elimina un producto, solo para Administrador
         [HttpDelete("{id}")]
-        [Authorize(Roles = "AdminPrincipal")]   // SOLO EL PRINCIPAL
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(int id)
         {
             var producto = await _context.Productos.FindAsync(id);
@@ -101,5 +91,6 @@ namespace PlastiStock.Controllers
         }
     }
 }
+
 
 

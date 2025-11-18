@@ -19,6 +19,13 @@ namespace PlastiStock.Models
         [MaxLength(50)]
         public required string UnidadMedida { get; set; }
 
+        [MaxLength(250)]
+        public string? Descripcion { get; set; }  
+
+        public int? Cantidad { get; set; }        
+
+        public decimal? Precio { get; set; }     
+
         public ICollection<ProductoEnProceso>? ProductosEnProceso { get; set; }
     }
 }

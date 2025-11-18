@@ -23,7 +23,7 @@ namespace PlastiStock.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Usuario> GetByIdAsync(int id)
+        public async Task<Usuario?> GetByIdAsync(int id)
         {
             return await _context.Usuarios
                 .Include(u => u.TipoDocumento)
@@ -86,10 +86,20 @@ namespace PlastiStock.Repositories
             }
         }
 
+        // 🔥 LOGIN — Buscar usuario por credenciales
+        public async Task<Usuario?> ObtenerPorCredenciales(string username, string password)
+        {
+            return await _context.Usuarios
+                .FirstOrDefaultAsync(u =>
+                    u.Nombre == username &&
+                    u.Contraseña == password);
+        }
+
         public Task DeleteAsync(Usuario usuario)
         {
             throw new NotImplementedException();
         }
     }
 }
+
 

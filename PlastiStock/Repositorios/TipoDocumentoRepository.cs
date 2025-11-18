@@ -1,29 +1,31 @@
-﻿using Microsoft.EntityFrameworkCore;  // Necesario para ToListAsync() y FirstOrDefaultAsync()
-using PlastiStock.Contest;             // Donde está el PlasticStockContext
-using PlastiStock.Models;              // Donde está la clase TipoDocumento
-using PlastiStock.Repositorios.Interfaces; // Donde está tu interfaz ITipoDocumentoRepository
+﻿using Microsoft.EntityFrameworkCore;
+using PlastiStock.Data;                       // Aquí está AppDbContext
+using PlastiStock.Models;                     // Tus modelos
+using PlastiStock.Repositorios.Interfaces;    // La interfaz
 
 namespace PlastiStock.Repositorios
 {
     public class TipoDocumentoRepository : ITipoDocumentoRepository
     {
-        private readonly PlasticStockContext _context;
+        private readonly AppDbContext _context;
 
-        public TipoDocumentoRepository(PlasticStockContext context)
+        public TipoDocumentoRepository(AppDbContext context)
         {
             _context = context;
         }
 
         public async Task<List<TipoDocumento>> ObtenerTiposDocumento()
         {
-            return await _context.TiposDeDocumento.ToListAsync();
+            return await _context.TiposDocumento.ToListAsync();
         }
 
-        public async Task<TipoDocumento> ObtenerTipoDocumento(int id)
+        public async Task<TipoDocumento?> ObtenerTipoDocumento(int id)
         {
-            return await _context.TiposDeDocumento.FirstOrDefaultAsync(td => td.Id == id);
+            return await _context.TiposDocumento
+                .FirstOrDefaultAsync(td => td.Id == id);
         }
     }
 }
+
 
 

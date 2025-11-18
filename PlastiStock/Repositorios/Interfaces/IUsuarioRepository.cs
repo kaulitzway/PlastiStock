@@ -7,10 +7,13 @@ namespace PlastiStock.Repositories
     public interface IUsuarioRepository
     {
         Task<List<Usuario>> GetAllAsync();
-        Task<Usuario> GetByIdAsync(int id);
+        Task<Usuario?> GetByIdAsync(int id);
         Task<bool> AddAsync(Usuario usuario);
         Task<bool> UpdateAsync(Usuario usuario);
         Task<bool> DeleteAsync(int id);
         Task DeleteAsync(Usuario usuario);
+
+        Task<Usuario?> ObtenerPorCredenciales(string username, string password);
     }
 }
+

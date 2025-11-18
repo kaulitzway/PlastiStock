@@ -28,11 +28,11 @@ public class Usuario
 
     [ForeignKey("TipoDocumento")]
     public int TipoDocumentoId { get; set; }
-    public TipoDocumento TipoDocumento { get; set; }
+    public TipoDocumento? TipoDocumento { get; set; }
 
     [ForeignKey("Rol")]
     public int RolId { get; set; }
-    public Rol Rol { get; set; }
+    public Rol? Rol { get; set; }
 }
 
 
