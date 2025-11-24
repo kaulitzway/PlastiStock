@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PlastiStock.Data;
 using PlastiStock.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PlastiStock.Controllers
 {
@@ -9,38 +13,43 @@ namespace PlastiStock.Controllers
     [ApiController]
     public class ProductoTerminadoController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly AppDbContext _context; // contexto de la base de datos
 
         public ProductoTerminadoController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/ProductoTerminado
+        // obtener todos los productos terminados (cualquier usuario autenticado)
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<ProductoTerminado>>> GetProductoTerminado()
         {
-            return await _context.ProductoTerminado.ToListAsync();
+            var lista = await _context.ProductoTerminado.ToListAsync();
+            return Ok(lista);
         }
 
-        // GET: api/ProductoTerminado/5
+        // obtener un producto terminado por id (cualquier usuario autenticado)
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<ProductoTerminado>> GetProductoTerminado(int id)
         {
             var productoTerminado = await _context.ProductoTerminado.FindAsync(id);
 
             if (productoTerminado == null)
-            {
                 return NotFound(new { mensaje = "Producto terminado no encontrado." });
-            }
 
-            return productoTerminado;
+            return Ok(productoTerminado);
         }
 
-        // POST: api/ProductoTerminado
+        // crear producto terminado (Administrador o Supervisor)
         [HttpPost]
+        [Authorize(Roles = "Administrador,Supervisor")]
         public async Task<ActionResult> PostProductoTerminado(ProductoTerminado productoTerminado)
         {
+            if (productoTerminado == null)
+                return BadRequest(new { mensaje = "El cuerpo de la solicitud está vacío." });
+
             _context.ProductoTerminado.Add(productoTerminado);
             await _context.SaveChangesAsync();
 
@@ -51,10 +60,14 @@ namespace PlastiStock.Controllers
             });
         }
 
-        // PUT: api/ProductoTerminado/5
+        // actualizar producto terminado (Administrador o Supervisor)
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrador,Supervisor")]
         public async Task<IActionResult> PutProductoTerminado(int id, ProductoTerminado productoTerminado)
         {
+            if (productoTerminado == null)
+                return BadRequest(new { mensaje = "El cuerpo de la solicitud está vacío." });
+
             if (id != productoTerminado.ProductoTerminadoId)
                 return BadRequest(new { mensaje = "El ID no coincide." });
 
@@ -75,8 +88,9 @@ namespace PlastiStock.Controllers
             return Ok(new { mensaje = "Producto terminado actualizado correctamente." });
         }
 
-        // DELETE: api/ProductoTerminado/5
+        // eliminar producto terminado (solo Administrador)
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> DeleteProductoTerminado(int id)
         {
             var productoTerminado = await _context.ProductoTerminado.FindAsync(id);
@@ -91,5 +105,6 @@ namespace PlastiStock.Controllers
         }
     }
 }
+
 
 

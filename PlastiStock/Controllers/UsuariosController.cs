@@ -6,7 +6,7 @@ using PlastiStock.Repositories;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using BCrypt.Net;
+using BCrypt.Net; 
 
 namespace PlastiStock.Controllers
 {
@@ -24,7 +24,9 @@ namespace PlastiStock.Controllers
         }
 
         // crear usuario
+
         [HttpPost("crear")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Create([FromBody] Usuario usuario)
         {
             if (usuario == null)
@@ -42,6 +44,7 @@ namespace PlastiStock.Controllers
 
         // listar usuarios
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             var usuarios = await _usuarioRepository.GetAllAsync();
@@ -50,6 +53,7 @@ namespace PlastiStock.Controllers
 
         // obtener usuario
         [HttpGet("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> GetById(int id)
         {
             var usuario = await _usuarioRepository.GetByIdAsync(id);
@@ -62,10 +66,17 @@ namespace PlastiStock.Controllers
 
         // actualizar usuario
         [HttpPut("{id:int}")]
+        [Authorize(Roles = "Administrador")]
+
         public async Task<IActionResult> Update(int id, [FromBody] Usuario usuario)
         {
             if (usuario.Id != id)
                 return BadRequest("No coincide el ID.");
+
+            if (!string.IsNullOrEmpty(usuario.Contraseña))
+            {
+                usuario.Contraseña = BCrypt.Net.BCrypt.HashPassword(usuario.Contraseña); // encriptar clave
+            }
 
             var actualizado = await _usuarioRepository.UpdateAsync(usuario);
 
@@ -76,7 +87,9 @@ namespace PlastiStock.Controllers
         }
 
         // eliminar usuario
+
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(int id)
         {
             var eliminado = await _usuarioRepository.DeleteAsync(id);

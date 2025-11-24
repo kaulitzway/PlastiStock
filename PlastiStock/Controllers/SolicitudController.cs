@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PlastiStock.Models;
 using PlastiStock.Repositories;
 using PlastiStock.Repositorios.Interfaces;
+using System.Threading.Tasks;
 
 namespace PlastiStock.Controllers
 {
@@ -10,37 +11,44 @@ namespace PlastiStock.Controllers
     [ApiController]
     public class SolicitudController : ControllerBase
     {
-        private readonly ISolicitudRepository _repository;
+        private readonly ISolicitudRepository _repository; // repositorio de solicitudes
 
         public SolicitudController(ISolicitudRepository repository)
         {
             _repository = repository;
         }
 
-        // Ver todas las solicitudes (solo AdminPrincipal)
+        // ver todas las solicitudes (solo Administrador)
         [HttpGet]
-        [Authorize(Roles = "Administrador_Principal")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _repository.GetAllAsync());
+            var lista = await _repository.GetAllAsync();
+            return Ok(lista);
         }
 
-        // Crear solicitud (AdminSecundario)
+        // crear una solicitud (Administrador, Supervisor u Operario)
         [HttpPost]
-        [Authorize(Roles = "Administrador_Secundario")]
+        [Authorize(Roles = "Administrador,Supervisor,Operario")]
         public async Task<IActionResult> Create(Solicitud s)
         {
+            if (s == null)
+                return BadRequest("El cuerpo de la solicitud está vacío.");
+
             var nueva = await _repository.CreateAsync(s);
             return Ok(nueva);
         }
 
-        // Aprobar o rechazar (solo AdminPrincipal)
+        // cambiar estado de la solicitud (solo Administrador)
         [HttpPut("{id}/estado")]
-        [Authorize(Roles = "Administrador_Principal")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> CambiarEstado(int id, [FromBody] EstadoSolicitudDTO dto)
         {
+            if (dto == null)
+                return BadRequest("El cuerpo de la solicitud está vacío.");
+
             await _repository.UpdateEstadoAsync(id, dto.Estado, dto.Observaciones);
-            return Ok("Estado actualizado");
+            return Ok("Estado actualizado correctamente");
         }
     }
 
@@ -50,4 +58,5 @@ namespace PlastiStock.Controllers
         public string Observaciones { get; set; }
     }
 }
+
 

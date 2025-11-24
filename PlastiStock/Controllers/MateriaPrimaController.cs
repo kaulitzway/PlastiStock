@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PlastiStock.Models;
 using PlastiStock.Repositorios.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PlastiStock.Controllers
 {
@@ -8,23 +11,25 @@ namespace PlastiStock.Controllers
     [ApiController]
     public class MateriaPrimaController : ControllerBase
     {
-        private readonly IMateriaPrimaRepository _repository;
+        private readonly IMateriaPrimaRepository _repository; // repositorio de MateriaPrima
 
         public MateriaPrimaController(IMateriaPrimaRepository repository)
         {
             _repository = repository;
         }
 
-        // GET: api/MateriaPrima
+        // obtener todas las materias primas (cualquiera autenticado)
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<MateriaPrima>>> GetAll()
         {
             var lista = await _repository.GetAllAsync();
             return Ok(lista);
         }
 
-        // GET: api/MateriaPrima/5
+        // obtener una materia prima por id (cualquiera autenticado)
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<MateriaPrima>> GetById(int id)
         {
             var materia = await _repository.GetByIdAsync(id);
@@ -35,18 +40,26 @@ namespace PlastiStock.Controllers
             return Ok(materia);
         }
 
-        // POST: api/MateriaPrima
+        // crear materia prima (Administrador o Supervisor)
         [HttpPost]
+        [Authorize(Roles = "Administrador,Supervisor")]
         public async Task<ActionResult<MateriaPrima>> Create(MateriaPrima materiaPrima)
         {
+            if (materiaPrima == null)
+                return BadRequest("El cuerpo de la solicitud está vacío.");
+
             var nueva = await _repository.CreateAsync(materiaPrima);
             return CreatedAtAction(nameof(GetById), new { id = nueva.Id }, nueva);
         }
 
-        // PUT: api/MateriaPrima/5
+        // actualizar materia prima (Administrador o Supervisor)
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrador,Supervisor")]
         public async Task<IActionResult> Update(int id, MateriaPrima materiaPrima)
         {
+            if (materiaPrima == null)
+                return BadRequest("El cuerpo de la solicitud está vacío.");
+
             if (id != materiaPrima.Id)
                 return BadRequest("El ID no coincide.");
 
@@ -58,8 +71,9 @@ namespace PlastiStock.Controllers
             return NoContent();
         }
 
-        // DELETE: api/MateriaPrima/5
+        // eliminar materia prima (solo Administrador)
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(int id)
         {
             var eliminado = await _repository.DeleteAsync(id);
@@ -71,4 +85,5 @@ namespace PlastiStock.Controllers
         }
     }
 }
+
 

@@ -14,7 +14,7 @@ namespace PlastiStock.Data
         public DbSet<Rol> Roles { get; set; }
         public DbSet<Producto> Productos { get; set; }
 
-        // 🔹 Nuevas tablas
+        //  Nuevas tablas
         public DbSet<Permiso> Permisos { get; set; }
         public DbSet<RolPermiso> RolesPermisos { get; set; }
         public DbSet<Solicitud> Solicitudes { get; set; }
