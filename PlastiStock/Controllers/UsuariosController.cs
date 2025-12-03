@@ -104,6 +104,6 @@ namespace PlastiStock.Controllers
     public class LoginRequest
     {
         public string Correo { get; set; }
-        public string Contrasena { get; set; } // propiedad en español
+        public string Contrasena { get; set; } 
     }
 }

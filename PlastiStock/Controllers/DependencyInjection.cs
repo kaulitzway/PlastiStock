@@ -13,13 +13,22 @@ namespace PlastiStock.Controllers
         {
             string connectionString = _configuration["ConnectionString:SQLConectionStrngs"];
 
-            // Aquí se registra el ÚNICO contexto válido
+            // Registro del contexto
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            // Repositorios reales
+            // Repositorios existentes
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<ITipoDocumentoRepository, TipoDocumentoRepository>();
+
+            // Repositorios nuevos
+            services.AddScoped<IProveedorRepository, ProveedorRepository>();
+            services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+            services.AddScoped<IEntradaInventarioRepository, EntradaInventarioRepository>();
+            services.AddScoped<ISalidaInventarioRepository, SalidaInventarioRepository>();
+            services.AddScoped<IKardexRepository, KardexRepository>();
+            services.AddScoped<IOrdenProduccionRepository, OrdenProduccionRepository>();
+            services.AddScoped<IMermaRepository, MermaRepository>();
 
             return services;
         }
