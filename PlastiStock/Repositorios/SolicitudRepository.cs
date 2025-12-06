@@ -41,7 +41,7 @@ namespace PlastiStock.Repositories
             return solicitud;
         }
 
-        public async Task UpdateEstadoAsync(int id, string nuevoEstado, string observaciones)
+        public async Task UpdateAsync(int id, string nuevoEstado, string observaciones)
         {
             var solicitud = await _context.Solicitudes.FindAsync(id);
             if (solicitud == null) return;

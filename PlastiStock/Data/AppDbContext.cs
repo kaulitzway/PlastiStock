@@ -21,7 +21,10 @@ namespace PlastiStock.Data
         public DbSet<MateriaPrima> MateriasPrimas { get; set; }
         public DbSet<ProductoEnProceso> ProductosEnProceso { get; set; }
         public DbSet<ProductoTerminado> ProductoTerminado { get; set; }
-        public object TipoDeDocumento { get; internal set; }
+        public DbSet<Proveedor> Proveedores { get; set; }
+
+        public DbSet<Categoria> Categorias { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

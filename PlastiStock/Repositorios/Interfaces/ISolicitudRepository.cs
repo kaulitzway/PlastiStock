@@ -1,6 +1,5 @@
 ﻿using PlastiStock.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+
 
 namespace PlastiStock.Repositorios.Interfaces
 {
@@ -9,7 +8,8 @@ namespace PlastiStock.Repositorios.Interfaces
         Task<IEnumerable<Solicitud>> GetAllAsync();
         Task<Solicitud> GetByIdAsync(int id);
         Task<Solicitud> CreateAsync(Solicitud solicitud);
-        Task UpdateEstadoAsync(int id, string nuevoEstado, string observaciones);
+        Task UpdateAsync(int id, string nuevoEstado, string observaciones);
+
     }
 }
 

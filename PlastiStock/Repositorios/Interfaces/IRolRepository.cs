@@ -4,10 +4,11 @@ namespace PlastiStock.Interfaces
 {
     public interface IRolRepository
     {
-        Task<List<Rol>> ObtenerRoles();
-        Task<Rol> ObtenerRol(int id);
-        Task<bool> CrearRol(Rol rol);
-        Task<bool> ActualizarRol(Rol rol, int id);
-        Task<bool> EliminarRol(int id);
+        Task<List<Rol>> GetAllAsync();
+        Task<Rol> GetByIdAsync(int id);
+        Task<bool> CreateAsync(Rol rol);
+        Task<bool> UpdateAsync(Rol rol, int id);
+        Task<bool> DeleteAsync(int id);
     }
 }
+

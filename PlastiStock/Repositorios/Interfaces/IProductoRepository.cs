@@ -1,14 +1,14 @@
 ﻿using PlastiStock.Models;
 
-namespace PlastiStock.Repositories
+namespace PlastiStock.Repositories.Interfaces
 {
     public interface IProductoRepository
     {
-        Task<IEnumerable<Producto>> GetAll();
-        Task<Producto?> GetById(int id);
-        Task<Producto> Create(Producto producto);
-        Task<bool> Update(Producto producto);
-        Task<bool> Delete(int id);
+        Task<IEnumerable<Producto>> GetAllAsync();
+        Task<Producto?> GetByIdAsync(int id);
+        Task<Producto> CreateAsync(Producto producto);
+        Task<bool> UpdateAsync(Producto producto);
+        Task<bool> DeleteAsync(int id);
     }
 }
 

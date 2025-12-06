@@ -14,17 +14,19 @@ namespace PlastiStock.Repositories
             _context = context;
         }
 
-        public async Task<List<Rol>> ObtenerRoles() => await _context.Roles.ToListAsync();
+        public async Task<List<Rol>> GetAllAsync()
+            => await _context.Roles.ToListAsync();
 
-        public async Task<Rol> ObtenerRol(int id) => await _context.Roles.FindAsync(id);
+        public async Task<Rol> GetByIdAsync(int id)
+            => await _context.Roles.FindAsync(id);
 
-        public async Task<bool> CrearRol(Rol rol)
+        public async Task<bool> CreateAsync(Rol rol)
         {
             _context.Roles.Add(rol);
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> ActualizarRol(Rol rol, int id)
+        public async Task<bool> UpdateAsync(Rol rol, int id)
         {
             var existente = await _context.Roles.FindAsync(id);
             if (existente == null) return false;
@@ -33,7 +35,7 @@ namespace PlastiStock.Repositories
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> EliminarRol(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var rol = await _context.Roles.FindAsync(id);
             if (rol == null) return false;
@@ -43,4 +45,6 @@ namespace PlastiStock.Repositories
         }
     }
 }
+
+
 

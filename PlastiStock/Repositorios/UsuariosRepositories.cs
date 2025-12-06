@@ -3,6 +3,7 @@ using PlastiStock.Data;
 using PlastiStock.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using PlastiStock.Repositories.Interfaces;
 
 namespace PlastiStock.Repositories
 {
@@ -86,7 +87,7 @@ namespace PlastiStock.Repositories
             }
         }
 
-        // 🔥 LOGIN — Buscar usuario por credenciales
+        // LOGIN — Buscar usuario por credenciales
         public async Task<Usuario?> ObtenerPorCredenciales(string username, string password)
         {
             return await _context.Usuarios

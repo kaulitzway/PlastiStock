@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PlastiStock.Repositories
+namespace PlastiStock.Repositories.Interfaces
 {
     public interface IUsuarioRepository
     {
