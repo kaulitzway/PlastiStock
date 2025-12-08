@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlastiStock.Models;
-using PlastiStock.Repositories;
-using PlastiStock.Repositorios.Interfaces;
+using PlastiStock.Repositories.Interfaces;
 using System.Threading.Tasks;
 
 namespace PlastiStock.Controllers
@@ -47,7 +46,7 @@ namespace PlastiStock.Controllers
             if (dto == null)
                 return BadRequest("El cuerpo de la solicitud está vacío.");
 
-            await _repository.UpdateEstadoAsync(id, dto.Estado, dto.Observaciones);
+            await _repository.UpdateAsync(id, dto.Estado, dto.Observaciones);
             return Ok("Estado actualizado correctamente");
         }
     }

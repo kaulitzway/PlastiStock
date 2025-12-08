@@ -24,6 +24,14 @@ namespace PlastiStock.Data
         public DbSet<Proveedor> Proveedores { get; set; }
 
         public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<EntradaInventario> EntradasInventario { get; set; }
+
+        public DbSet<SalidaInventario> SalidasInventarios { get; set; }
+        public DbSet<Kardex> Kardex { get; set; }
+        public DbSet<OrdenProduccion> OrdenesProduccion { get; set; }
+
+        public DbSet<Merma> Mermas { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

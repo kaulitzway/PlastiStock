@@ -3,7 +3,7 @@ using PlastiStock.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PlastiStock.Repositorios.Interfaces
+namespace PlastiStock.Repositories.Interfaces
 {
     public interface ITipoDocumentoRepository
     {

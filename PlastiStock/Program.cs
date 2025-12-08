@@ -4,7 +4,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PlastiStock.Data;
 using PlastiStock.Repositories;
-using PlastiStock.Repositorios.Interfaces;
+using PlastiStock.Repositories.Interfaces;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 

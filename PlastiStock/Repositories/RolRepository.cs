@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PlastiStock.Data;
-using PlastiStock.Interfaces;
+using PlastiStock.Repositories.Interfaces;
 using PlastiStock.Models;
 
 namespace PlastiStock.Repositories

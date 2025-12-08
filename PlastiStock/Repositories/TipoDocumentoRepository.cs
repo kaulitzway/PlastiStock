@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PlastiStock.Data;                       // Aquí está AppDbContext
 using PlastiStock.Models;                     // Tus modelos
-using PlastiStock.Repositorios.Interfaces;    // La interfaz
+using PlastiStock.Repositories.Interfaces; // La interfaz
 
-namespace PlastiStock.Repositorios
+namespace PlastiStock.Repositories
 {
     public class TipoDocumentoRepository : ITipoDocumentoRepository
     {

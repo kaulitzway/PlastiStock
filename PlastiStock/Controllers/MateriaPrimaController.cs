@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlastiStock.Models;
-using PlastiStock.Repositorios.Interfaces;
+using PlastiStock.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

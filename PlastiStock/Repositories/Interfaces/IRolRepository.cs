@@ -1,6 +1,6 @@
 ﻿using PlastiStock.Models;
 
-namespace PlastiStock.Interfaces
+namespace PlastiStock.Repositories.Interfaces
 {
     public interface IRolRepository
     {

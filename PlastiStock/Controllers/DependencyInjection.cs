@@ -2,8 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using PlastiStock.Data;
 using PlastiStock.Repositories;
-using PlastiStock.Repositorios;
-using PlastiStock.Repositorios.Interfaces;
+using PlastiStock.Repositories.Interfaces;
 
 namespace PlastiStock.Controllers
 {

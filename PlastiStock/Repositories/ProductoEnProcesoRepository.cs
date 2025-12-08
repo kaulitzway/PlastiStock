@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PlastiStock.Data;
 using PlastiStock.Models;
-using PlastiStock.Repositorios.Interfaces;
+using PlastiStock.Repositories.Interfaces;
 
 namespace PlastiStock.Repositories
 {

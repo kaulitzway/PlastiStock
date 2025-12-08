@@ -1,4 +1,4 @@
-﻿namespace PlastiStock.Repositorios
+﻿namespace PlastiStock.Repositories
 {
     internal class PlasticStockContext
     {

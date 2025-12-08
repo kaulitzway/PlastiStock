@@ -6,7 +6,8 @@ using PlastiStock.Repositories;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using BCrypt.Net; 
+using BCrypt.Net;
+using PlastiStock.Repositories.Interfaces;
 
 namespace PlastiStock.Controllers
 {

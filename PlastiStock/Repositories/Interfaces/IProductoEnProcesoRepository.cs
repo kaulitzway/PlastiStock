@@ -1,6 +1,6 @@
 ﻿using PlastiStock.Models;
 
-namespace PlastiStock.Repositorios.Interfaces
+namespace PlastiStock.Repositories.Interfaces
 {
     public interface IProductoEnProcesoRepository
     {
