@@ -1,0 +1,14 @@
+from app.routers.auth import router as auth_router
+from app.routers.usuarios import router as usuarios_router
+from app.routers.productos import router as productos_router
+from app.routers.categorias import router as categorias_router
+from app.routers.proveedores import router as proveedores_router
+from app.routers.materias_primas import router as materias_primas_router
+from app.routers.productos_en_proceso import router as productos_en_proceso_router
+from app.routers.productos_terminados import router as productos_terminados_router
+from app.routers.entradas_inventario import router as entradas_inventario_router
+from app.routers.salidas_inventario import router as salidas_inventario_router
+from app.routers.kardex import router as kardex_router
+from app.routers.ordenes_produccion import router as ordenes_produccion_router
+from app.routers.mermas import router as mermas_router
+from app.routers.solicitudes import router as solicitudes_router
