@@ -1,46 +1,47 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 from app.models.models import Merma, Producto, Kardex
 from typing import List, Optional
 
 class MermaRepository:
-    def __init__(self, db: Session):
+    def __init__(self, db: AsyncSession):
         self.db = db
-    
-    def get_all(self) -> List[Merma]:
-        return self.db.query(Merma).order_by(Merma.Fecha.desc()).all()
-    
-    def get_by_id(self, merma_id: int) -> Optional[Merma]:
-        return self.db.query(Merma).filter(Merma.Id == merma_id).first()
-    
-    def get_by_producto(self, producto_id: int) -> List[Merma]:
-        return self.db.query(Merma).filter(Merma.ProductoId == producto_id).all()
-    
-    def create(self, merma_data: dict) -> Merma:
+
+    async def get_all(self) -> List[Merma]:
+        result = await self.db.execute(select(Merma).order_by(Merma.Fecha.desc()))
+        return result.scalars().all()
+
+    async def get_by_id(self, merma_id: int) -> Optional[Merma]:
+        result = await self.db.execute(select(Merma).where(Merma.Id == merma_id))
+        return result.scalar_one_or_none()
+
+    async def get_by_producto(self, producto_id: int) -> List[Merma]:
+        result = await self.db.execute(select(Merma).where(Merma.ProductoId == producto_id))
+        return result.scalars().all()
+
+    async def create(self, merma_data: dict) -> Merma:
         merma = Merma(**merma_data)
         self.db.add(merma)
-        
-        # Actualizar stock del producto (restar merma)
-        producto = self.db.query(Producto).filter(Producto.Id == merma_data["ProductoId"]).first()
+
+        result = await self.db.execute(select(Producto).where(Producto.Id == merma_data["ProductoId"]))
+        producto = result.scalar_one_or_none()
         if producto:
             producto.Stock -= merma_data["Cantidad"]
-            
-            # Registrar en Kardex
             kardex = Kardex(
                 ProductoId=merma_data["ProductoId"],
                 TipoMovimiento="Merma",
                 Cantidad=merma_data["Cantidad"]
             )
             self.db.add(kardex)
-        
-        self.db.commit()
-        self.db.refresh(merma)
+
+        await self.db.commit()
+        await self.db.refresh(merma)
         return merma
-    
-    def delete(self, merma_id: int) -> bool:
-        merma = self.get_by_id(merma_id)
+
+    async def delete(self, merma_id: int) -> bool:
+        merma = await self.get_by_id(merma_id)
         if not merma:
             return False
-        
-        self.db.delete(merma)
-        self.db.commit()
+        await self.db.delete(merma)
+        await self.db.commit()
         return True

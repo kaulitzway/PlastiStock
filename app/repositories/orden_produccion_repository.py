@@ -1,44 +1,45 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 from app.models.models import OrdenProduccion
 from typing import List, Optional
 
 class OrdenProduccionRepository:
-    def __init__(self, db: Session):
+    def __init__(self, db: AsyncSession):
         self.db = db
-    
-    def get_all(self) -> List[OrdenProduccion]:
-        return self.db.query(OrdenProduccion).order_by(OrdenProduccion.FechaCreacion.desc()).all()
-    
-    def get_by_id(self, orden_id: int) -> Optional[OrdenProduccion]:
-        return self.db.query(OrdenProduccion).filter(OrdenProduccion.Id == orden_id).first()
-    
-    def get_by_estado(self, estado: str) -> List[OrdenProduccion]:
-        return self.db.query(OrdenProduccion).filter(OrdenProduccion.Estado == estado).all()
-    
-    def create(self, orden_data: dict) -> OrdenProduccion:
+
+    async def get_all(self) -> List[OrdenProduccion]:
+        result = await self.db.execute(select(OrdenProduccion).order_by(OrdenProduccion.FechaCreacion.desc()))
+        return result.scalars().all()
+
+    async def get_by_id(self, orden_id: int) -> Optional[OrdenProduccion]:
+        result = await self.db.execute(select(OrdenProduccion).where(OrdenProduccion.Id == orden_id))
+        return result.scalar_one_or_none()
+
+    async def get_by_estado(self, estado: str) -> List[OrdenProduccion]:
+        result = await self.db.execute(select(OrdenProduccion).where(OrdenProduccion.Estado == estado))
+        return result.scalars().all()
+
+    async def create(self, orden_data: dict) -> OrdenProduccion:
         orden = OrdenProduccion(**orden_data)
         self.db.add(orden)
-        self.db.commit()
-        self.db.refresh(orden)
+        await self.db.commit()
+        await self.db.refresh(orden)
         return orden
-    
-    def update(self, orden_id: int, orden_data: dict) -> Optional[OrdenProduccion]:
-        orden = self.get_by_id(orden_id)
+
+    async def update(self, orden_id: int, orden_data: dict) -> Optional[OrdenProduccion]:
+        orden = await self.get_by_id(orden_id)
         if not orden:
             return None
-        
         for key, value in orden_data.items():
             setattr(orden, key, value)
-        
-        self.db.commit()
-        self.db.refresh(orden)
+        await self.db.commit()
+        await self.db.refresh(orden)
         return orden
-    
-    def delete(self, orden_id: int) -> bool:
-        orden = self.get_by_id(orden_id)
+
+    async def delete(self, orden_id: int) -> bool:
+        orden = await self.get_by_id(orden_id)
         if not orden:
             return False
-        
-        self.db.delete(orden)
-        self.db.commit()
+        await self.db.delete(orden)
+        await self.db.commit()
         return True

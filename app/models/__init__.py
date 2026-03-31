@@ -1,1 +1,19 @@
-from app.models.models import *
+from app.models.models import (
+    TipoDocumento,
+    Rol,
+    Usuario,
+    Categoria,
+    Producto,
+    MateriaPrima,
+    ProductoEnProceso,
+    ProductoTerminado,
+    Proveedor,
+    Permiso,
+    RolPermiso,
+    Solicitud,
+    EntradaInventario,
+    SalidaInventario,
+    Kardex,
+    OrdenProduccion,
+    Merma,
+)

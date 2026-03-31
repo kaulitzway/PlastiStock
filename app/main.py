@@ -1,6 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
+from app.database import engine, Base
+
+# Importa los modelos ANTES de crear las tablas
+from app.models import models
+
 from app.routers import (
     auth_router,
     usuarios_router,
@@ -18,13 +23,14 @@ from app.routers import (
     solicitudes_router
 )
 
+# 1. Primero se crea app
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,
     description="API REST para PlastiStock - Sistema de gestión de inventario"
 )
 
-# Configuración de CORS
+# 2. Luego el middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -33,7 +39,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Incluir routers
+# 3. Luego el evento startup
+@app.on_event("startup")
+async def startup():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+
+# 4. Luego los routers
 app.include_router(auth_router)
 app.include_router(usuarios_router)
 app.include_router(productos_router)
